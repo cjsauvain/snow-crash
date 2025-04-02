@@ -1,0 +1,8 @@
+ls
+
+level02.pcap -> analyze in wireshark
+
+We see packets with 1 byte data length, look only at those packets
+The 1 bytes successively form password for user flag02 (we get levelft_waNDReL0L, keep only ft_waNDReL0L)
+su flag02 (password: "ft_waNDReL0L")
+getflag -> token for level03: "kooda2puivaav1idi4f57q8iq"

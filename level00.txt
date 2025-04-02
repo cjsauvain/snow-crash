@@ -1,0 +1,11 @@
+ssh level00@172.20.10.3 -p 4242
+
+ls									->shows nothing in current directory
+
+find / -user level00 2>/dev/null	-> shows nothing interesting
+
+find / -user flag00 2>/dev/null	-> shows /usr/sbin/john -> cat /usr/sbin/john $cdiiddwpgswtgt -> dcode : nottoohardhere
+
+su flag00 with password "nottoohardhere"
+
+getflag as flag00 to get token for level01 ("x24ti5gi3x0ol2eh4esiuxias")

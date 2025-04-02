@@ -1,0 +1,9 @@
+cat /etc/passwd
+
+flag01:42hDRfypTqqnw:3001:3001::/home/flag/flag01:/bin/bash
+
+use john the ripper to crack the password's hash -> (password: "abcdefg")
+
+su flag01
+
+getflag -> token for level02: f2av5il02puano7naaf6adaaf

