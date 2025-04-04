@@ -1,0 +1,3 @@
+- en desassamblant le programme level07 on remarque qu il affiche une variable d env.
+-juste a faire une injection pour mettre du code dans la variable d env
+-export LOGNAME="; getflag" -> affiche le flag

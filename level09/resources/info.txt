@@ -1,0 +1,3 @@
+-token contient une string hasher fais par l executable ./level09
+-l algo montre qu il incremente la valeur ascii par rapport a son index
+-commande hexdump -C pour avoir les value hexa et un script qui dehash 

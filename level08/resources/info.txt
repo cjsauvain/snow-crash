@@ -1,0 +1,3 @@
+-le programme level08 ne veut pas lire le fichier token
+-lien symbolique d un autre fichier pour bypass la verif
+-level08@SnowCrash:~$ ln -s /home/user/level08/token /tmp/flag08.txt
