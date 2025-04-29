@@ -1,0 +1,13 @@
+1. On ne trouve rien avec les commande "find / -user level14 2>/dev/null", "find / -user flag14 2>/dev/null", il n'y a rien d'intéressant dans /etc/passwd, aucun fichier ou binaire dans le dossier $HOME.
+Essayons donc de reverse le binaire /bin/getflag
+
+2. En le reversant, on voit tout dabord un appel a ptrace (qu'on peut aussi voir a l'aide de strace) pour empecher le debug.
+La fonction ptrace est ce qu'utilise gdb pour debugger les programmes, il permet a un processus d'etre observer et controller par un autre.
+Si un appel a ptrace(PTRACE_TRACEME, ...) echoue, ca veut dire qu'un programme trace deja le programme cible, ce qui constitue donc une protection anti-debug. (Un programme ne voulant pas etre debugger va appeler cette fonction, comme ca lorsque gdb run l'executable, il appel une première fois ptrace, et lorsqu'on arrivera au moment ou le programme appel ptrace a son tour, il se rendra compte qu'un autre processus le trace deja et exit).
+
+3. Pour contourner cette protection, nous pouvons juste faire un catch syscall ptrace dans gdb, et lorsque la fonction a ete executer, set $eax=0 pour faire comme si aucun programme ne tracait deja l'executable.
+
+4. Ensuite, plus loin dans le code, on s'apercoit que le programme fait un appel a getuid. On peut donc mettre un breakpoint a cet endroit la et modifié encore une fois eax après l'appel a getuid pour se faire passer pour l'utilisateur flag14 (id = 3014 obtenu avec la commande "id flagf14").
+
+5. Plus loin dans le code, on peut voir plusieurs appel a ft_des, on peut donc break sur ft_des maintenant qu'on a set le bon uid.
+Une fois ft_des appelé dans le "if id == 3014", on peut executer dans gdb "x/s $eax", et on obtient bien le flag "7QiHafiNa3HVozsaXkawuYrTstxbpABHD8CPnHJ".

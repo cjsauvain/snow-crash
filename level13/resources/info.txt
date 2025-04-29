@@ -1,0 +1,19 @@
+level13@SnowCrash:~$ ./level13
+UID 2013 started us but we we expect 4242
+
+Lorsqu'on lance ./level13 avec gdb, on arrive l'instruction qui compare l'uid avec 4242.
+
+Il suffit de changer l'opcode de l'instruction suivante dans gdb:
+	set {char}0x804859f=0x75
+
+0x804859f=adresse de l'instruction je
+0x75=opcode de l 'instruction jne
+
+Cela nous permet de bypass la vérification et d'agir comme si on avait l'uid 4242
+
+Plus loin dans le code, on voit la chaine de caractère "boe]!ai0FB@.:|L6l@A?>qJ}I"
+qui est stocker sur la stack, et l'instruction d'après est un call de la fonction ft_des,
+qui correspond a un algo de chiffrement.
+
+Après l'appel a cette fonction, un appel a printf va etre effectuer avec comme argument :
+printf("your token is %s\n", 2A31L79asukciNyi8uppkEuSx)
